@@ -1,4 +1,5 @@
 import Student from '#models/student'
+import { studentValidator } from '#validators/student'
 import type { HttpContext } from '@adonisjs/core/http'
 
 export default class StudentsController {
@@ -7,18 +8,27 @@ export default class StudentsController {
    */
   async index({}: HttpContext)
    {
-    const students = await Student.query().orderBy('name').orderBy('firstname')
-    console.log(students.length)
-    return students
+    // const students = await Student.query().orderBy('name').orderBy('firstname')
+    // console.log(students.length)
+    // return students
+
+    return await Student.query().orderBy('name').orderBy('firstname')
 }
 
   /**
    * Handle form submission for the create action
    */
-  async store({ request }: HttpContext) {
 
-    const student = request.only(['name','firstname'])
-    return Student.create(student)
+  // Ajouter un élève
+
+  async store({ request,response }: HttpContext) {
+
+    // Récupération des données envoyées par le client et validation des données
+    const {name,firstname} = await request.validateUsing(studentValidator)
+    // Création d'un nouvel élève avec les données validées
+    const student = await Student.create({name,firstname})
+    // On utilise `response.created` pour retourner un code HTTP 201 avec les données de l'élève crée
+    return response.created(student)
   }
 
   /**
@@ -38,17 +48,15 @@ export default class StudentsController {
 * - pour une modification complète (PUT)
 * - ou une modification partielle (PATCH)
 */
-async update({ params, request }: HttpContext) {
+async update({ params, request , response }: HttpContext) {
 // Récupération des données
-const data = request.only(['name', 'firstname'])
+const data = await request.validateUsing(studentValidator)
 // Vérification de l'existence de l'élève
 const student = await Student.findOrFail(params.id)
-// Mise à jour des données de l'élève
-student.merge(data)
-// Sauvegarde des modifications
-await student.save()
+// Mise à jour des données de l'élève + sauvegarde : Asynchrone quality of JS
+await student.merge(data).save()
 // Retour le json de l'élève mis à jour
-return student
+return response.ok(student)
 }
 
   /**
