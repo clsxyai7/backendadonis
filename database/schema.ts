@@ -47,6 +47,23 @@ export class StudentSchema extends BaseModel {
   declare updatedAt: DateTime | null
 }
 
+export class TeacherSchema extends BaseModel {
+  static $columns = ['createdAt', 'email', 'firstname', 'id', 'name', 'updatedAt'] as const
+  $columns = TeacherSchema.$columns
+  @column.dateTime({ autoCreate: true })
+  declare createdAt: DateTime | null
+  @column()
+  declare email: string
+  @column()
+  declare firstname: string
+  @column({ isPrimary: true })
+  declare id: number
+  @column()
+  declare name: string
+  @column.dateTime({ autoCreate: true, autoUpdate: true })
+  declare updatedAt: DateTime | null
+}
+
 export class UserSchema extends BaseModel {
   static $columns = ['createdAt', 'email', 'fullName', 'id', 'password', 'updatedAt'] as const
   $columns = UserSchema.$columns

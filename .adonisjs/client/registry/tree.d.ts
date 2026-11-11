@@ -25,4 +25,11 @@ export interface ApiDefinition {
     update: typeof routes['students.update']
     destroy: typeof routes['students.destroy']
   }
+  teachers: {
+    index: typeof routes['teachers.index']
+    store: typeof routes['teachers.store']
+    show: typeof routes['teachers.show']
+    update: typeof routes['teachers.update']
+    destroy: typeof routes['teachers.destroy']
+  }
 }

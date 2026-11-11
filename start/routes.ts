@@ -43,3 +43,7 @@ router
 
   // Routes pour le CRUD /students
 router.resource('students', controllers.Students).apiOnly()
+
+
+ //   // Routes pour le CRUD /teachers
+router.resource('teachers', controllers.Teachers).apiOnly()
