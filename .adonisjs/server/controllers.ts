@@ -9,4 +9,5 @@ export const controllers = {
   Profile: () => import('#controllers/profile_controller'),
   Students: () => import('#controllers/students_controller'),
   Teachers: () => import('#controllers/teachers_controller'),
+  Classgroups: () => import('#controllers/classgroups_controller'),
 }

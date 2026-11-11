@@ -47,3 +47,7 @@ router.resource('students', controllers.Students).apiOnly()
 
  //   // Routes pour le CRUD /teachers
 router.resource('teachers', controllers.Teachers).apiOnly()
+
+
+ //   // Routes pour le CRUD /classgroup
+router.resource('teachers', controllers.Classgroups).apiOnly()
