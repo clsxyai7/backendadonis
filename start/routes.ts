@@ -50,4 +50,4 @@ router.resource('teachers', controllers.Teachers).apiOnly()
 
 
  //   // Routes pour le CRUD /classgroup
-router.resource('teachers', controllers.Classgroups).apiOnly()
+router.resource('classgroups', controllers.Classgroups).apiOnly()

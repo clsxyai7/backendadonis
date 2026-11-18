@@ -32,4 +32,11 @@ export interface ApiDefinition {
     update: typeof routes['teachers.update']
     destroy: typeof routes['teachers.destroy']
   }
+  classgroups: {
+    index: typeof routes['classgroups.index']
+    store: typeof routes['classgroups.store']
+    show: typeof routes['classgroups.show']
+    update: typeof routes['classgroups.update']
+    destroy: typeof routes['classgroups.destroy']
+  }
 }

@@ -6,6 +6,10 @@ export default class extends BaseSchema {
   async up() {
     this.schema.createTable(this.tableName, (table) => {
       table.increments('id')
+
+      // Relation : 1 classe → 1 enseignant
+      table.integer('teacher_id').unsigned().nullable().references('id').inTable('teachers')
+
       table.string('name').notNullable()
       table.timestamp('created_at')
       table.timestamp('updated_at')

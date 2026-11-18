@@ -6,27 +6,39 @@ export default class ClassgroupsController {
   /**
    * Display a list of resource
    */
-  async index({}: HttpContext) {
-    return await ClassGroup.query()
+  // async index({}: HttpContext) {
+  //   return await ClassGroup.query().preload('teacher').orderBy('name','asc')
+  // }
+
+  async index({ response }: HttpContext) {
+    const classGroups = await ClassGroup.query().preload('teacher').orderBy('name', 'asc')
+    return response.ok(classGroups)
   }
 
   /**
    * Handle form submission for the create action
    */
-  async store({ request,respone }: HttpContext) {
+  async store({ request,response }: HttpContext) {
     //douane
+    // const {name,teacherId} = await request.validateUsing(classgroupValidator)
+    // //usine
+    // const cls = await ClassGroup.create({name,teacherId})
+
     const data = await request.validateUsing(classgroupValidator)
-    //usine
-    const cls = await ClassGroup.create(data)
+    const cls = await ClassGroup.create(data) // Injecte tout le contenu de data d'un coup !
+
+
+
     //produit
-    return respone.created(cls)
+    return response.created(cls)
   }
 
   /**
    * Show individual record
    */
-  async show({ params }: HttpContext) {
-    return await ClassGroup.findOrFail(params.id)
+  async show({ params , response }: HttpContext) {
+    const classGroup = await ClassGroup.query().preload('teacher').where('id', params.id).firstOrFail()
+    return response.ok(classGroup)
   }
 
   /**
@@ -40,6 +52,9 @@ export default class ClassgroupsController {
     //merge,save
     await cls.merge(data).save()
     // retour
+
+    await cls.load('teacher')
+
     return response.ok(cls)
   }
 

@@ -142,13 +142,13 @@ export interface Registry {
     methods: ["POST"]
     pattern: '/teachers'
     types: {
-      body: {}
+      body: ExtractBody<InferInput<(typeof import('#validators/teacher').teacherValidator)>>
       paramsTuple: []
       params: {}
-      query: {}
+      query: ExtractQuery<InferInput<(typeof import('#validators/teacher').teacherValidator)>>
       response: ExtractResponse<Awaited<ReturnType<import('#controllers/teachers_controller').default['store']>>>
-      errorResponse: ExtractErrorResponse<Awaited<ReturnType<import('#controllers/teachers_controller').default['store']>>>
-      rawResponse: ExtractRawResponse<Awaited<ReturnType<import('#controllers/teachers_controller').default['store']>>>
+      errorResponse: ExtractErrorResponse<Awaited<ReturnType<import('#controllers/teachers_controller').default['store']>>> | { status: 422; response: { errors: SimpleError[] } }
+      rawResponse: ExtractRawResponse<Awaited<ReturnType<import('#controllers/teachers_controller').default['store']>>> | { status: 422; response: { errors: SimpleError[] } }
     }
   }
   'teachers.show': {
@@ -168,13 +168,13 @@ export interface Registry {
     methods: ["PUT","PATCH"]
     pattern: '/teachers/:id'
     types: {
-      body: {}
+      body: ExtractBody<InferInput<(typeof import('#validators/teacher').teacherValidator)>>
       paramsTuple: [ParamValue]
       params: { id: ParamValue }
-      query: {}
+      query: ExtractQuery<InferInput<(typeof import('#validators/teacher').teacherValidator)>>
       response: ExtractResponse<Awaited<ReturnType<import('#controllers/teachers_controller').default['update']>>>
-      errorResponse: ExtractErrorResponse<Awaited<ReturnType<import('#controllers/teachers_controller').default['update']>>>
-      rawResponse: ExtractRawResponse<Awaited<ReturnType<import('#controllers/teachers_controller').default['update']>>>
+      errorResponse: ExtractErrorResponse<Awaited<ReturnType<import('#controllers/teachers_controller').default['update']>>> | { status: 422; response: { errors: SimpleError[] } }
+      rawResponse: ExtractRawResponse<Awaited<ReturnType<import('#controllers/teachers_controller').default['update']>>> | { status: 422; response: { errors: SimpleError[] } }
     }
   }
   'teachers.destroy': {
@@ -188,6 +188,71 @@ export interface Registry {
       response: ExtractResponse<Awaited<ReturnType<import('#controllers/teachers_controller').default['destroy']>>>
       errorResponse: ExtractErrorResponse<Awaited<ReturnType<import('#controllers/teachers_controller').default['destroy']>>>
       rawResponse: ExtractRawResponse<Awaited<ReturnType<import('#controllers/teachers_controller').default['destroy']>>>
+    }
+  }
+  'classgroups.index': {
+    methods: ["GET","HEAD"]
+    pattern: '/classgroups'
+    types: {
+      body: {}
+      paramsTuple: []
+      params: {}
+      query: {}
+      response: ExtractResponse<Awaited<ReturnType<import('#controllers/classgroups_controller').default['index']>>>
+      errorResponse: ExtractErrorResponse<Awaited<ReturnType<import('#controllers/classgroups_controller').default['index']>>>
+      rawResponse: ExtractRawResponse<Awaited<ReturnType<import('#controllers/classgroups_controller').default['index']>>>
+    }
+  }
+  'classgroups.store': {
+    methods: ["POST"]
+    pattern: '/classgroups'
+    types: {
+      body: ExtractBody<InferInput<(typeof import('#validators/classgroup').classgroupValidator)>>
+      paramsTuple: []
+      params: {}
+      query: ExtractQuery<InferInput<(typeof import('#validators/classgroup').classgroupValidator)>>
+      response: ExtractResponse<Awaited<ReturnType<import('#controllers/classgroups_controller').default['store']>>>
+      errorResponse: ExtractErrorResponse<Awaited<ReturnType<import('#controllers/classgroups_controller').default['store']>>> | { status: 422; response: { errors: SimpleError[] } }
+      rawResponse: ExtractRawResponse<Awaited<ReturnType<import('#controllers/classgroups_controller').default['store']>>> | { status: 422; response: { errors: SimpleError[] } }
+    }
+  }
+  'classgroups.show': {
+    methods: ["GET","HEAD"]
+    pattern: '/classgroups/:id'
+    types: {
+      body: {}
+      paramsTuple: [ParamValue]
+      params: { id: ParamValue }
+      query: {}
+      response: ExtractResponse<Awaited<ReturnType<import('#controllers/classgroups_controller').default['show']>>>
+      errorResponse: ExtractErrorResponse<Awaited<ReturnType<import('#controllers/classgroups_controller').default['show']>>>
+      rawResponse: ExtractRawResponse<Awaited<ReturnType<import('#controllers/classgroups_controller').default['show']>>>
+    }
+  }
+  'classgroups.update': {
+    methods: ["PUT","PATCH"]
+    pattern: '/classgroups/:id'
+    types: {
+      body: ExtractBody<InferInput<(typeof import('#validators/classgroup').classgroupValidator)>>
+      paramsTuple: [ParamValue]
+      params: { id: ParamValue }
+      query: ExtractQuery<InferInput<(typeof import('#validators/classgroup').classgroupValidator)>>
+      response: ExtractResponse<Awaited<ReturnType<import('#controllers/classgroups_controller').default['update']>>>
+      errorResponse: ExtractErrorResponse<Awaited<ReturnType<import('#controllers/classgroups_controller').default['update']>>> | { status: 422; response: { errors: SimpleError[] } }
+      rawResponse: ExtractRawResponse<Awaited<ReturnType<import('#controllers/classgroups_controller').default['update']>>> | { status: 422; response: { errors: SimpleError[] } }
+    }
+  }
+  'classgroups.destroy': {
+    methods: ["DELETE"]
+    pattern: '/classgroups/:id'
+    types: {
+      body: {}
+      paramsTuple: [ParamValue]
+      params: { id: ParamValue }
+      query: {}
+      response: ExtractResponse<Awaited<ReturnType<import('#controllers/classgroups_controller').default['destroy']>>>
+      errorResponse: ExtractErrorResponse<Awaited<ReturnType<import('#controllers/classgroups_controller').default['destroy']>>>
+      rawResponse: ExtractRawResponse<Awaited<ReturnType<import('#controllers/classgroups_controller').default['destroy']>>>
     }
   }
 }

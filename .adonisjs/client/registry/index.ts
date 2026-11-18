@@ -92,6 +92,36 @@ const routes = {
     tokens: [[0,"teachers"],[1,"id"]],
     types: placeholder as Registry['teachers.destroy']['types'],
   },
+  'classgroups.index': {
+    methods: ["GET","HEAD"],
+    pattern: '/classgroups',
+    tokens: [[0,"classgroups"]],
+    types: placeholder as Registry['classgroups.index']['types'],
+  },
+  'classgroups.store': {
+    methods: ["POST"],
+    pattern: '/classgroups',
+    tokens: [[0,"classgroups"]],
+    types: placeholder as Registry['classgroups.store']['types'],
+  },
+  'classgroups.show': {
+    methods: ["GET","HEAD"],
+    pattern: '/classgroups/:id',
+    tokens: [[0,"classgroups"],[1,"id"]],
+    types: placeholder as Registry['classgroups.show']['types'],
+  },
+  'classgroups.update': {
+    methods: ["PUT","PATCH"],
+    pattern: '/classgroups/:id',
+    tokens: [[0,"classgroups"],[1,"id"]],
+    types: placeholder as Registry['classgroups.update']['types'],
+  },
+  'classgroups.destroy': {
+    methods: ["DELETE"],
+    pattern: '/classgroups/:id',
+    tokens: [[0,"classgroups"],[1,"id"]],
+    types: placeholder as Registry['classgroups.destroy']['types'],
+  },
 } as const satisfies Record<string, AdonisEndpoint>
 
 export { routes }

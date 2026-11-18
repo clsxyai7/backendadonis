@@ -1,3 +1,4 @@
+import ClassGroup from '#models/class_group'
 import Student from '#models/student'
 import { studentValidator } from '#validators/student'
 import type { HttpContext } from '@adonisjs/core/http'
@@ -6,13 +7,14 @@ export default class StudentsController {
   /**
    * Display a list of resource
    */
-  async index({}: HttpContext)
+  async index({response}: HttpContext)
    {
     // const students = await Student.query().orderBy('name').orderBy('firstname')
     // console.log(students.length)
     // return students
 
-    return await Student.query().orderBy('name').orderBy('firstname')
+    const resp= Student.query().preload('class_group').orderBy('name').orderBy('firstname')
+    return response.ok(resp)
 }
 
   /**
@@ -34,8 +36,9 @@ export default class StudentsController {
   /**
    * Show individual record
    */
-  async show({ params }: HttpContext) {
-    return Student.findOrFail(params.id)
+  async show({ params,response }: HttpContext) {
+    const rep = await Student.query().preload('class_group').where('id',params.id).firstOrFail()
+    return response.ok(rep)
   }
 
   /**
@@ -56,6 +59,8 @@ const student = await Student.findOrFail(params.id)
 // Mise à jour des données de l'élève + sauvegarde : Asynchrone quality of JS
 await student.merge(data).save()
 // Retour le json de l'élève mis à jour
+await student.load('class_group')
+
 return response.ok(student)
 }
 
