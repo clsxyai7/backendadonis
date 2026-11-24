@@ -122,6 +122,36 @@ const routes = {
     tokens: [[0,"classgroups"],[1,"id"]],
     types: placeholder as Registry['classgroups.destroy']['types'],
   },
+  'comments.index': {
+    methods: ["GET","HEAD"],
+    pattern: '/comments',
+    tokens: [[0,"comments"]],
+    types: placeholder as Registry['comments.index']['types'],
+  },
+  'comments.store': {
+    methods: ["POST"],
+    pattern: '/comments',
+    tokens: [[0,"comments"]],
+    types: placeholder as Registry['comments.store']['types'],
+  },
+  'comments.show': {
+    methods: ["GET","HEAD"],
+    pattern: '/comments/:id',
+    tokens: [[0,"comments"],[1,"id"]],
+    types: placeholder as Registry['comments.show']['types'],
+  },
+  'comments.update': {
+    methods: ["PUT","PATCH"],
+    pattern: '/comments/:id',
+    tokens: [[0,"comments"],[1,"id"]],
+    types: placeholder as Registry['comments.update']['types'],
+  },
+  'comments.destroy': {
+    methods: ["DELETE"],
+    pattern: '/comments/:id',
+    tokens: [[0,"comments"],[1,"id"]],
+    types: placeholder as Registry['comments.destroy']['types'],
+  },
 } as const satisfies Record<string, AdonisEndpoint>
 
 export { routes }

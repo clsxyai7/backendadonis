@@ -39,4 +39,11 @@ export interface ApiDefinition {
     update: typeof routes['classgroups.update']
     destroy: typeof routes['classgroups.destroy']
   }
+  comments: {
+    index: typeof routes['comments.index']
+    store: typeof routes['comments.store']
+    show: typeof routes['comments.show']
+    update: typeof routes['comments.update']
+    destroy: typeof routes['comments.destroy']
+  }
 }

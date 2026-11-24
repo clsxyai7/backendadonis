@@ -10,6 +10,7 @@
 import { middleware } from '#start/kernel'
 import router from '@adonisjs/core/services/router'
 import { controllers } from '#generated/controllers'
+import Comment from '#models/comment'
 
 router.get('/', () => {
   return { hello: 'world' }
@@ -41,6 +42,7 @@ router
   return 'API is working!'
   })
 
+  router.group(()=>{
   // Routes pour le CRUD /students
 router.resource('students', controllers.Students).apiOnly()
 
@@ -51,3 +53,8 @@ router.resource('teachers', controllers.Teachers).apiOnly()
 
  //   // Routes pour le CRUD /classgroup
 router.resource('classgroups', controllers.Classgroups).apiOnly()
+
+// Routes pour le crud Comment , apiOny 5 crud created
+router.resource('comments',controllers.Comments).apiOnly()
+})
+.use(middleware.auth())

@@ -12,6 +12,14 @@ export default class extends BaseSchema {
       table.string('email').notNullable()
       table.timestamp('created_at')
       table.timestamp('updated_at')
+
+      table
+      .integer('user_id')
+      .unsigned()
+      .references('id')
+      .inTable('users')
+      .onDelete('CASCADE')
+      .unique().nullable()
     })
   }
 

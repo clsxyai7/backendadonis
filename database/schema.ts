@@ -47,6 +47,23 @@ export class ClassGroupSchema extends BaseModel {
   declare updatedAt: DateTime | null
 }
 
+export class CommentSchema extends BaseModel {
+  static $columns = ['content', 'createdAt', 'id', 'studentId', 'teacherId', 'updatedAt'] as const
+  $columns = CommentSchema.$columns
+  @column()
+  declare content: string
+  @column.dateTime({ autoCreate: true })
+  declare createdAt: DateTime | null
+  @column({ isPrimary: true })
+  declare id: number
+  @column()
+  declare studentId: number
+  @column()
+  declare teacherId: number
+  @column.dateTime({ autoCreate: true, autoUpdate: true })
+  declare updatedAt: DateTime | null
+}
+
 export class StudentSchema extends BaseModel {
   static $columns = ['classGroupId', 'createdAt', 'firstname', 'id', 'name', 'updatedAt'] as const
   $columns = StudentSchema.$columns
@@ -65,7 +82,7 @@ export class StudentSchema extends BaseModel {
 }
 
 export class TeacherSchema extends BaseModel {
-  static $columns = ['createdAt', 'email', 'firstname', 'id', 'name', 'updatedAt'] as const
+  static $columns = ['createdAt', 'email', 'firstname', 'id', 'name', 'updatedAt', 'userId'] as const
   $columns = TeacherSchema.$columns
   @column.dateTime({ autoCreate: true })
   declare createdAt: DateTime | null
@@ -79,10 +96,12 @@ export class TeacherSchema extends BaseModel {
   declare name: string
   @column.dateTime({ autoCreate: true, autoUpdate: true })
   declare updatedAt: DateTime | null
+  @column()
+  declare userId: number | null
 }
 
 export class UserSchema extends BaseModel {
-  static $columns = ['createdAt', 'email', 'fullName', 'id', 'password', 'updatedAt'] as const
+  static $columns = ['createdAt', 'email', 'fullName', 'id', 'password', 'role', 'updatedAt'] as const
   $columns = UserSchema.$columns
   @column.dateTime({ autoCreate: true })
   declare createdAt: DateTime
@@ -94,6 +113,8 @@ export class UserSchema extends BaseModel {
   declare id: number
   @column({ serializeAs: null })
   declare password: string
+  @column()
+  declare role: string
   @column.dateTime({ autoCreate: true, autoUpdate: true })
   declare updatedAt: DateTime | null
 }

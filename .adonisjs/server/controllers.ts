@@ -6,6 +6,7 @@
 export const controllers = {
   AccessTokens: () => import('#controllers/access_tokens_controller'),
   Classgroups: () => import('#controllers/classgroups_controller'),
+  Comments: () => import('#controllers/comments_controller'),
   NewAccount: () => import('#controllers/new_account_controller'),
   Profile: () => import('#controllers/profile_controller'),
   Students: () => import('#controllers/students_controller'),

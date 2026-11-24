@@ -2,6 +2,8 @@
 import Teacher from '#models/teacher'
 import { teacherValidator } from '#validators/teacher'
 import type { HttpContext } from '@adonisjs/core/http'
+import { commentValidator } from '#validators/comment'
+import Comment from '#models/comment'
 
 export default class TeachersController {
   /**
@@ -11,18 +13,34 @@ export default class TeachersController {
     return await Teacher.query()
   }
 
-  /**
-   Create (Créer) : Ajouter un nouveau dossier (store)
-   */
-  async store({ request,response }: HttpContext) {
-    // douane
-    const {name,firstname,email} = await request.validateUsing(teacherValidator)
-    // usine
-    const teacher = await Teacher.create({name,firstname,email})
-    // produit
-    return response.created(teacher)
-    
+    /**
+ * Ajouter un nouveau commentaire à l'élève student_id
+ */
+async store({ params, request, response, auth }: HttpContext) {
+  // Récupération des données envoyées par le client et validation des données
+  const { content } = await request.validateUsing(commentValidator)
+
+  // Récupération de l'utilisateur authentifié
+  const user = auth.getUserOrFail()
+
+  // Chargement de l'enseignant lié à cet utilisateur
+  const teacher = await user.related('teacher').query().first()
+  if (!teacher) {
+    return response.badRequest({ message: 'Teacher not found' })
   }
+
+  // Création du commentaire lié à l'élève
+  const comment = await Comment.create({
+    content,
+    studentId: params.student_id,
+    teacherId: teacher.id,
+  })
+
+  // Réponse HTTP 201 avec le commentaire
+  return response.created(comment)
+}
+
+
 
   /**
    Read (Lire) : Afficher un dossier précis (show)
