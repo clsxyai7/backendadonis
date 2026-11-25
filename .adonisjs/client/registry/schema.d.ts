@@ -67,10 +67,10 @@ export interface Registry {
       body: {}
       paramsTuple: []
       params: {}
-      query: {}
+      query: ExtractQueryForGet<InferInput<(typeof import('#validators/student').getStudentsQueryValidator)>>
       response: ExtractResponse<Awaited<ReturnType<import('#controllers/students_controller').default['index']>>>
-      errorResponse: ExtractErrorResponse<Awaited<ReturnType<import('#controllers/students_controller').default['index']>>>
-      rawResponse: ExtractRawResponse<Awaited<ReturnType<import('#controllers/students_controller').default['index']>>>
+      errorResponse: ExtractErrorResponse<Awaited<ReturnType<import('#controllers/students_controller').default['index']>>> | { status: 422; response: { errors: SimpleError[] } }
+      rawResponse: ExtractRawResponse<Awaited<ReturnType<import('#controllers/students_controller').default['index']>>> | { status: 422; response: { errors: SimpleError[] } }
     }
   }
   'students.store': {
@@ -142,10 +142,10 @@ export interface Registry {
     methods: ["POST"]
     pattern: '/teachers'
     types: {
-      body: ExtractBody<InferInput<(typeof import('#validators/teacher').teacherValidator)>>
+      body: ExtractBody<InferInput<(typeof import('#validators/comment').commentValidator)>>
       paramsTuple: []
       params: {}
-      query: ExtractQuery<InferInput<(typeof import('#validators/teacher').teacherValidator)>>
+      query: ExtractQuery<InferInput<(typeof import('#validators/comment').commentValidator)>>
       response: ExtractResponse<Awaited<ReturnType<import('#controllers/teachers_controller').default['store']>>>
       errorResponse: ExtractErrorResponse<Awaited<ReturnType<import('#controllers/teachers_controller').default['store']>>> | { status: 422; response: { errors: SimpleError[] } }
       rawResponse: ExtractRawResponse<Awaited<ReturnType<import('#controllers/teachers_controller').default['store']>>> | { status: 422; response: { errors: SimpleError[] } }
@@ -255,65 +255,65 @@ export interface Registry {
       rawResponse: ExtractRawResponse<Awaited<ReturnType<import('#controllers/classgroups_controller').default['destroy']>>>
     }
   }
-  'comments.index': {
+  'students.comments.index': {
     methods: ["GET","HEAD"]
-    pattern: '/comments'
+    pattern: '/students/:student_id/comments'
     types: {
       body: {}
-      paramsTuple: []
-      params: {}
+      paramsTuple: [ParamValue]
+      params: { student_id: ParamValue }
       query: {}
       response: ExtractResponse<Awaited<ReturnType<import('#controllers/comments_controller').default['index']>>>
       errorResponse: ExtractErrorResponse<Awaited<ReturnType<import('#controllers/comments_controller').default['index']>>>
       rawResponse: ExtractRawResponse<Awaited<ReturnType<import('#controllers/comments_controller').default['index']>>>
     }
   }
-  'comments.store': {
+  'students.comments.store': {
     methods: ["POST"]
-    pattern: '/comments'
+    pattern: '/students/:student_id/comments'
     types: {
       body: ExtractBody<InferInput<(typeof import('#validators/comment').commentValidator)>>
-      paramsTuple: []
-      params: {}
+      paramsTuple: [ParamValue]
+      params: { student_id: ParamValue }
       query: ExtractQuery<InferInput<(typeof import('#validators/comment').commentValidator)>>
       response: ExtractResponse<Awaited<ReturnType<import('#controllers/comments_controller').default['store']>>>
       errorResponse: ExtractErrorResponse<Awaited<ReturnType<import('#controllers/comments_controller').default['store']>>> | { status: 422; response: { errors: SimpleError[] } }
       rawResponse: ExtractRawResponse<Awaited<ReturnType<import('#controllers/comments_controller').default['store']>>> | { status: 422; response: { errors: SimpleError[] } }
     }
   }
-  'comments.show': {
+  'students.comments.show': {
     methods: ["GET","HEAD"]
-    pattern: '/comments/:id'
+    pattern: '/students/:student_id/comments/:id'
     types: {
       body: {}
-      paramsTuple: [ParamValue]
-      params: { id: ParamValue }
+      paramsTuple: [ParamValue, ParamValue]
+      params: { student_id: ParamValue; id: ParamValue }
       query: {}
       response: ExtractResponse<Awaited<ReturnType<import('#controllers/comments_controller').default['show']>>>
       errorResponse: ExtractErrorResponse<Awaited<ReturnType<import('#controllers/comments_controller').default['show']>>>
       rawResponse: ExtractRawResponse<Awaited<ReturnType<import('#controllers/comments_controller').default['show']>>>
     }
   }
-  'comments.update': {
+  'students.comments.update': {
     methods: ["PUT","PATCH"]
-    pattern: '/comments/:id'
+    pattern: '/students/:student_id/comments/:id'
     types: {
       body: ExtractBody<InferInput<(typeof import('#validators/comment').commentValidator)>>
-      paramsTuple: [ParamValue]
-      params: { id: ParamValue }
+      paramsTuple: [ParamValue, ParamValue]
+      params: { student_id: ParamValue; id: ParamValue }
       query: ExtractQuery<InferInput<(typeof import('#validators/comment').commentValidator)>>
       response: ExtractResponse<Awaited<ReturnType<import('#controllers/comments_controller').default['update']>>>
       errorResponse: ExtractErrorResponse<Awaited<ReturnType<import('#controllers/comments_controller').default['update']>>> | { status: 422; response: { errors: SimpleError[] } }
       rawResponse: ExtractRawResponse<Awaited<ReturnType<import('#controllers/comments_controller').default['update']>>> | { status: 422; response: { errors: SimpleError[] } }
     }
   }
-  'comments.destroy': {
+  'students.comments.destroy': {
     methods: ["DELETE"]
-    pattern: '/comments/:id'
+    pattern: '/students/:student_id/comments/:id'
     types: {
       body: {}
-      paramsTuple: [ParamValue]
-      params: { id: ParamValue }
+      paramsTuple: [ParamValue, ParamValue]
+      params: { student_id: ParamValue; id: ParamValue }
       query: {}
       response: ExtractResponse<Awaited<ReturnType<import('#controllers/comments_controller').default['destroy']>>>
       errorResponse: ExtractErrorResponse<Awaited<ReturnType<import('#controllers/comments_controller').default['destroy']>>>

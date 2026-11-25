@@ -122,35 +122,35 @@ const routes = {
     tokens: [[0,"classgroups"],[1,"id"]],
     types: placeholder as Registry['classgroups.destroy']['types'],
   },
-  'comments.index': {
+  'students.comments.index': {
     methods: ["GET","HEAD"],
-    pattern: '/comments',
-    tokens: [[0,"comments"]],
-    types: placeholder as Registry['comments.index']['types'],
+    pattern: '/students/:student_id/comments',
+    tokens: [[0,"students"],[1,"student_id"],[0,"comments"]],
+    types: placeholder as Registry['students.comments.index']['types'],
   },
-  'comments.store': {
+  'students.comments.store': {
     methods: ["POST"],
-    pattern: '/comments',
-    tokens: [[0,"comments"]],
-    types: placeholder as Registry['comments.store']['types'],
+    pattern: '/students/:student_id/comments',
+    tokens: [[0,"students"],[1,"student_id"],[0,"comments"]],
+    types: placeholder as Registry['students.comments.store']['types'],
   },
-  'comments.show': {
+  'students.comments.show': {
     methods: ["GET","HEAD"],
-    pattern: '/comments/:id',
-    tokens: [[0,"comments"],[1,"id"]],
-    types: placeholder as Registry['comments.show']['types'],
+    pattern: '/students/:student_id/comments/:id',
+    tokens: [[0,"students"],[1,"student_id"],[0,"comments"],[1,"id"]],
+    types: placeholder as Registry['students.comments.show']['types'],
   },
-  'comments.update': {
+  'students.comments.update': {
     methods: ["PUT","PATCH"],
-    pattern: '/comments/:id',
-    tokens: [[0,"comments"],[1,"id"]],
-    types: placeholder as Registry['comments.update']['types'],
+    pattern: '/students/:student_id/comments/:id',
+    tokens: [[0,"students"],[1,"student_id"],[0,"comments"],[1,"id"]],
+    types: placeholder as Registry['students.comments.update']['types'],
   },
-  'comments.destroy': {
+  'students.comments.destroy': {
     methods: ["DELETE"],
-    pattern: '/comments/:id',
-    tokens: [[0,"comments"],[1,"id"]],
-    types: placeholder as Registry['comments.destroy']['types'],
+    pattern: '/students/:student_id/comments/:id',
+    tokens: [[0,"students"],[1,"student_id"],[0,"comments"],[1,"id"]],
+    types: placeholder as Registry['students.comments.destroy']['types'],
   },
 } as const satisfies Record<string, AdonisEndpoint>
 
