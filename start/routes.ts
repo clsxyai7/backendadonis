@@ -10,7 +10,9 @@
 import { middleware } from '#start/kernel'
 import router from '@adonisjs/core/services/router'
 import { controllers } from '#generated/controllers'
-import Comment from '#models/comment'
+import AutoSwagger from 'adonis-autoswagger'
+import swagger from '#config/swagger'
+
 
 router.get('/', () => {
   return { hello: 'world' }
@@ -55,6 +57,16 @@ router.resource('teachers', controllers.Teachers).apiOnly()
 router.resource('classgroups', controllers.Classgroups).apiOnly()
 
 // Routes pour le crud Comment , apiOny 5 crud created
-router.resource('comments',controllers.Comments).apiOnly()
+router.resource('students.comments',controllers.Comments).apiOnly()
 })
 .use(middleware.auth())
+
+// Retourne la spécification OpenAPI au format YAML
+router.get('/swagger', async () => {
+  return AutoSwagger.default.docs(router.toJSON(), swagger)
+})
+
+// Affiche l'interface interactive Swagger-UI à partir de /swagger
+router.get('/docs', async () => {
+  return AutoSwagger.default.ui('/swagger', swagger)
+})
