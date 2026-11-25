@@ -1,20 +1,46 @@
-import ClassGroup from '#models/class_group'
+
 import Student from '#models/student'
-import { studentValidator } from '#validators/student'
+import { getStudentsQueryValidator,studentValidator } from '#validators/student'
 import type { HttpContext } from '@adonisjs/core/http'
 
 export default class StudentsController {
   /**
    * Display a list of resource
    */
-  async index({response}: HttpContext)
-   {
-    // const students = await Student.query().orderBy('name').orderBy('firstname')
-    // console.log(students.length)
-    // return students
+ async index({ response, request }: HttpContext) {
+  // 1. Validation + valeurs par défaut
+  const {
+    page = 1,
+    limit = 10,
+    sort = 'name',
+    order = 'asc',
+    classGroupId,
+    search,
+  } = await request.validateUsing(getStudentsQueryValidator)
 
-    const resp= Student.query().preload('class_group').orderBy('name').orderBy('firstname')
-    return response.ok(resp)
+  // 2. Préparation de la requête (SANS await)
+  const query = Student.query().preload('class_group').preload('comments')
+
+  // 3. Filtres optionnels
+  if (classGroupId) {
+    query.where('class_group_id', classGroupId)
+  }
+
+  if (search) {
+    query.where((subQuery) => {
+      subQuery.whereILike('name', `%${search}%`).orWhereILike('firstname', `%${search}%`)
+    })
+  }
+
+  // 4. Tri et exécution finale (AVEC await)
+  query.orderBy(sort, order)
+  const students = await query.paginate(page, limit)
+
+  // 5. Construction des liens dans "meta" et réponse
+  students.baseUrl('/students')
+  students.queryString({ page, limit, sort, order, classGroupId, search })
+
+  return response.ok(students)
 }
 
   /**
